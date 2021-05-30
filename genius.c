@@ -9,7 +9,9 @@ Programa: Jogo inspirado no Genius, lançado pela Estrela na década de 80
 #include<stdlib.h> //Biblioteca que possui as funções rand, srand e system("clear")
 #include<unistd.h> //Biblioteca que possui a função sleep
 
-int sequencia[32], respostas[32];
+int sequencia[32], respostas[32]; //Vetores com a sequeência gerada e com as respostas, respectivamente
+
+int vitoria = 0; // Variável que diz se o jogador ganhou (1 = ganhou, 0 = não ganhou ainda ou perdeu)
 
 /* Função que imprime o painel sem nenhuma seção piscando */
 void normal() {
@@ -165,6 +167,9 @@ int jogo(int tam_sequencia, int erro) {
       }
    }
    system("clear");
+   if(aux2 == tam_sequencia){
+       vitoria = 1;
+   }
    return erro;
 }
 
@@ -196,12 +201,12 @@ int main() {
          scanf("%d", &tam_sequencia);
       }
    }
-   while(erro >= 0) { //Inicia o jogo apenas se o limite de erros não for atingido
+   while(erro >= 0 && vitoria == 0) { //Inicia o jogo apenas se o limite de erros não for atingido
       erro = jogo(tam_sequencia, erro); //Inicia o jogo
    }
    if(erro >= 0) { //O jogador acertou toda a sequência sem ultrapassar o limite de erros
       printf("Parabens, voce ganhou!\n");
-   }
+   } 
    else { //O jogador ultrapassou o limite de erros
       printf("Voce perdeu.\n");
    }
